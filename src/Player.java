@@ -1,12 +1,15 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends GameObject{
 
     private Handler handler;
+    private BufferedImage bufferedImage;
 
-    public Player(float x, float y, ID id, Handler handler) {
+    public Player(float x, float y, ID id, Handler handler, BufferedImage bufferedImage) {
         super(x, y, id);
         this.handler = handler;
+        this.bufferedImage = bufferedImage;
     }
 
     private void collision(){

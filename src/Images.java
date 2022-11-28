@@ -4,11 +4,11 @@ import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.io.IOException;
 
-public class Image extends java.awt.Image {
+public class Images extends java.awt.Image {
 
     private BufferedImage image;
 
-    public Image(BufferedImage image){
+    public Images(BufferedImage image){
         this.image = image;
     }
 
