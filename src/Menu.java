@@ -42,7 +42,7 @@ public class Menu extends MouseAdapter {
         g.drawImage(background, 0, 0, null);
 
         //gifs
-        g.drawImage(gif, 50, 800, null);//pokeball
+        //g.drawImage(gif, 50, 800, null);//pokeball
 
         if (counterX < 800) {
             rightwards = true;
@@ -104,6 +104,7 @@ public class Menu extends MouseAdapter {
         //play button menu
         if (mouseOver(mx, my, 260, 395, 138, 50)) {
             game.programState = Game.STATE.Game;
+            game.gameStarted = true;
         }
 
         //quit button menu

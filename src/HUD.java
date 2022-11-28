@@ -1,10 +1,16 @@
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class HUD {
-    public HUD(){
+public class HUD extends MouseAdapter {
 
+    private Game game;
+
+    public HUD(Game game){
+        this.game = game;
     }
 
     public void tick(){
@@ -12,8 +18,10 @@ public class HUD {
     }
 
     public void render(Graphics g) throws IOException, FontFormatException {
-        Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\textFont.otf")).deriveFont(25f);
+        //fonts
+        Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(20f);
         Font textFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(30f);
+        Font textFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(14f);
         g.setFont(textFont2);
 
         // your health bar
@@ -39,5 +47,59 @@ public class HUD {
         g.setColor(Color.black);
         g.setFont(textFont);
         g.drawString("Do your metronome!", 610,73);
+
+        //main menu button
+        g.setFont(textFont3);
+        g.drawString("Main menu", 850,125);
+        //g.drawRect(850,112,75,15);
+    }
+
+    public void mousePressed(MouseEvent e) {
+        int mx = e.getX();
+        int my = e.getY();
+
+        //main menu button
+        if (mouseOver(mx, my, 850,112,75,15)) {
+            if (game.programState == Game.STATE.Game) {
+                game.programState = Game.STATE.Menu;
+                game.metronomePressed = false;
+            }
+        }
+    }
+
+    public static float getMouseXposition(){
+        Point point = MouseInfo.getPointerInfo().getLocation();
+        return (float) point.getX();
+    }
+
+    public static float getMouseYposition(){
+        Point point = MouseInfo.getPointerInfo().getLocation();
+        return (float) point.getY();
+    }
+
+    public static boolean mouseHover(float x, float y, int width, int height){
+        if (getMouseXposition() > (x + width)){
+            return false;
+        }else if (getMouseXposition() < x){
+            return false;
+        }else if (getMouseYposition() > (y + height)){
+            return false;
+        }else if (getMouseYposition() < y){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
+        if (mx > x && mx < x + width) {
+            if (my > y && my < y + height) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

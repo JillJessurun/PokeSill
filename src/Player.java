@@ -7,11 +7,15 @@ public class Player extends GameObject{
 
     private Handler handler;
     private BufferedImage bufferedImage;
+    private BufferedImage trainer;
+    private Game game;
 
-    public Player(float x, float y, ID id, Handler handler, BufferedImage bufferedImage) {
+    public Player(float x, float y, ID id, Handler handler, BufferedImage bufferedImage, BufferedImage trainer, Game game) {
         super(x, y, id);
         this.handler = handler;
         this.bufferedImage = bufferedImage;
+        this.trainer = trainer;
+        this.game = game;
     }
 
     private void collision(){
@@ -30,9 +34,9 @@ public class Player extends GameObject{
 
     @Override
     public void tick() {
-        if (y >= 750){
+        if (y >= 800){
             upwards = false;
-        }else if(y <= 720){
+        }else if(y <= 770){
             upwards = true;
         }
 
@@ -45,7 +49,10 @@ public class Player extends GameObject{
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(bufferedImage, (int)x,(int)y, null);
+        if (!game.gameStarted){
+            g.drawImage(bufferedImage, (int) x, (int) y, null);
+        }
+        g.drawImage(trainer, 0, 650, null);
     }
 
     @Override
