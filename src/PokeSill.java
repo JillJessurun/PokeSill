@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class PokeSill{
     private double counter = 720;
@@ -12,51 +13,35 @@ public class PokeSill{
     private BufferedImage enemy;
     private Game game;
     private Player playerGame;
+    private Enemy enemyGame;
+    private HUD hud;
 
-    public PokeSill(BufferedImage battlefield, BufferedImage player, BufferedImage enemy, Game game, Player playerGame){
+    public PokeSill(BufferedImage battlefield, BufferedImage player, BufferedImage enemy, Game game, Player playerGame, Enemy enemyGame, HUD hud){
         this.battlefield = battlefield;
         this.player = player;
         this.enemy = enemy;
         this.game = game;
         this.playerGame = playerGame;
+        this.enemyGame = enemyGame;
+        this.hud = hud;
     }
 
     public void tick(){
-        /*
-        if (counter >= 750){
-            upwards = false;
-        }else if(counter <= 720){
-            upwards = true;
-        }
-
-        if (counter2 >= 750){
-            downwards = false;
-        }else if(counter2 <= 720){
-            downwards = true;
-        }
-
-        if (upwards){
-            counter = counter + 1.2;
-        }else{
-            counter = counter - 1;
-        }
-
-        if (downwards){
-            counter2 = counter2 + 1.2;
-        }else{
-            counter2 = counter2 - 1;
-        }
-         */
+        playerGame.tick();
+        enemyGame.tick();
+        hud.tick();
     }
 
-    public void render(Graphics g){
+    public void render(Graphics g) throws IOException, FontFormatException {
         if (game.pokemonRenderReady) {
             //background
             g.drawImage(battlefield, 0, -100, null);
 
             //sprites
-            g.drawImage(player, 650, (int)counter, null);
-            g.drawImage(enemy, 1350, (int)counter2, null);
+            playerGame.render(g);
+            enemyGame.render(g);
+
+            hud.render(g);
         }
     }
 }

@@ -3,6 +3,8 @@ import java.awt.image.BufferedImage;
 
 public class Player extends GameObject{
 
+    private boolean upwards;
+
     private Handler handler;
     private BufferedImage bufferedImage;
 
@@ -28,19 +30,22 @@ public class Player extends GameObject{
 
     @Override
     public void tick() {
-        x += velX;
-        y += velY;
+        if (y >= 750){
+            upwards = false;
+        }else if(y <= 720){
+            upwards = true;
+        }
 
-        x = Game.clamp(x, 0, Game.WIDTH - 64);
-        y = Game.clamp(y, 0, Game.HEIGHT - 64);
-
-        collision();
+        if (upwards){
+            y = (float) (y + 1.2);
+        }else{
+            y = y - 1;
+        }
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect((int)x, (int)y, 32, 32);
+        g.drawImage(bufferedImage, (int)x,(int)y, null);
     }
 
     @Override

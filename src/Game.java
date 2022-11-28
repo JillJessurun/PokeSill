@@ -1,3 +1,4 @@
+import javax.imageio.IIOException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,8 @@ public class Game extends Canvas implements Runnable {
     private ImageMirror imageMirror;
     private MakeTransparent makeTransparent;
     private Player playerGame;
+    private Enemy enemyGame;
+    private HUD hud;
 
     //images
     private BufferedImage background;
@@ -54,6 +57,7 @@ public class Game extends Canvas implements Runnable {
     //constructor
     public Game() throws IOException {
         //bufferedimageloader
+        hud = new HUD();
         makeTransparent = new MakeTransparent();
         loader = new BufferedImageLoader();
         imageMirror = new ImageMirror();
@@ -65,6 +69,27 @@ public class Game extends Canvas implements Runnable {
         int randomgetal1 = rand.nextInt(511);
         int randomgetal2 = rand.nextInt(511);
 
+        String s = String.valueOf(randomgetal1);
+        String number1 = s;
+        String st = String.valueOf(randomgetal2);
+        String number2 = st;
+
+        if (randomgetal1 < 100 && randomgetal1 >= 10){ //number with 2 digits
+            number1 = "0" + s;
+        }else if(randomgetal1 < 10){ //number with 1 digit
+            number1 = "00" + s;
+        }
+
+        if (randomgetal2 < 100 && randomgetal2 >= 10){ //number with 2 digits
+            number2 = "0" + st;
+        }else if(randomgetal2 < 10){ //number with 1 digit
+            number2 = "00" + st;
+        }
+
+
+        System.out.println("src\\sprites\\" + number1 + ".png");
+        System.out.println("src\\sprites\\" + number2 + ".png");
+
         //keylisteners
         this.addKeyListener(new KeyInput(handler));
 
@@ -73,8 +98,8 @@ public class Game extends Canvas implements Runnable {
         imageLoad2 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\pokeball.gif");
         imageLoad3 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\alakazam.gif");
         imageLoad4 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\battlefield.jpg");
-        imageLoad5 = loader.loadImage("src\\sprites\\" + randomgetal1 + ".png");
-        imageLoad6 = loader.loadImage("src\\sprites\\" + randomgetal2 + ".png");
+        imageLoad5 = loader.loadImage("src\\sprites\\" + number1 + ".png");
+        imageLoad6 = loader.loadImage("src\\sprites\\" + number2 + ".png");
 
         Images images = new Images(imageLoad);
         Images images2 = new Images(imageLoad2);
@@ -103,7 +128,8 @@ public class Game extends Canvas implements Runnable {
         menu = new Menu(background, gif, gif2, imageMirror, this);
         menuCreated = true;
         playerGame = new Player(650, 720, ID.Player, handler, newPlayer);
-        pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame);
+        enemyGame = new Enemy(1350,750,ID.Enemy, handler, newEnemy);
+        pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame, enemyGame, hud);
 
         this.addMouseListener(menu);
 
