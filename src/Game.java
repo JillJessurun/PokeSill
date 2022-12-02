@@ -29,6 +29,9 @@ public class Game extends Canvas implements Runnable {
     public boolean gameStarted = false;
     public boolean metronomePressed = false;
     public String move = "";
+    public static BufferedImage moveType;
+    public int moveBasePowerIndex1 = 0;
+    public int moveBasePowerIndex2 = 0;
     public int pokemonPlayerIndex;
     public int pokemonEnemyIndex;
 
@@ -42,33 +45,62 @@ public class Game extends Canvas implements Runnable {
     private Player playerGame;
     private Enemy enemyGame;
     private HUD hud;
-    private Moves moves;
+    public Moves moves;
     public Names names;
 
     //images
     private BufferedImage background;
     private static BufferedImage imageLoad;
-
     private BufferedImage gif;
     private static BufferedImage imageLoad2;
-
     private BufferedImage gif2;
     private static BufferedImage imageLoad3;
-
     private BufferedImage battlefield;
     private static BufferedImage imageLoad4;
-
     private BufferedImage player;
     private static BufferedImage imageLoad5;
-
     private BufferedImage enemy;
     private static BufferedImage imageLoad6;
-
     private BufferedImage ash;
     private static BufferedImage imageLoad7;
-
     private BufferedImage enemyTrainer;
     private static BufferedImage imageLoad8;
+    public BufferedImage bug;
+    public static BufferedImage imageLoad9;
+    public BufferedImage dark;
+    public static BufferedImage imageLoad10;
+    public BufferedImage dragon;
+    public static BufferedImage imageLoad11;
+    public BufferedImage electric;
+    public static BufferedImage imageLoad12;
+    public BufferedImage fairy;
+    public static BufferedImage imageLoad13;
+    public BufferedImage fighting;
+    public static BufferedImage imageLoad14;
+    public BufferedImage fire;
+    public static BufferedImage imageLoad15;
+    public BufferedImage flying;
+    public static BufferedImage imageLoad16;
+    public BufferedImage ghost;
+    public static BufferedImage imageLoad17;
+    public BufferedImage grass;
+    public static BufferedImage imageLoad18;
+    public BufferedImage ground;
+    public static BufferedImage imageLoad19;
+    public BufferedImage ice;
+    public static BufferedImage imageLoad20;
+    public BufferedImage normal;
+    public static BufferedImage imageLoad21;
+    public BufferedImage poison;
+    public static BufferedImage imageLoad22;
+    public BufferedImage psychic;
+    public static BufferedImage imageLoad23;
+    public BufferedImage rock;
+    public static BufferedImage imageLoad24;
+    public BufferedImage steel;
+    public static BufferedImage imageLoad25;
+    public BufferedImage water;
+    public static BufferedImage imageLoad26;
 
     //pages
     public enum STATE {
@@ -124,6 +156,24 @@ public class Game extends Canvas implements Runnable {
         imageLoad6 = loader.loadImage("src\\sprites\\" + number2 + ".png");
         imageLoad7 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\ash.png");
         imageLoad8 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\silver.png");
+        imageLoad9 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\bug.png");
+        imageLoad10 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\dark.png");
+        imageLoad11 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\dragon.png");
+        imageLoad12 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\electric.png");
+        imageLoad13 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\fairy.png");
+        imageLoad14 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\fighting.png");
+        imageLoad15 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\fire.png");
+        imageLoad16 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\flying.png");
+        imageLoad17 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\ghost.png");
+        imageLoad18 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\grass.png");
+        imageLoad19 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\ground.png");
+        imageLoad20 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\ice.png");
+        imageLoad21 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\normal.png");
+        imageLoad22 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\poison.png");
+        imageLoad23 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\psychic.png");
+        imageLoad24 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\rock.png");
+        imageLoad25 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\steel.png");
+        imageLoad26 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\types\\water.png");
 
         Images images = new Images(imageLoad);
         Images images2 = new Images(imageLoad2);
@@ -133,6 +183,24 @@ public class Game extends Canvas implements Runnable {
         Images images6 = new Images(imageLoad6);
         Images images7 = new Images(imageLoad7);
         Images images8 = new Images(imageLoad8);
+        Images images9 = new Images(imageLoad9);
+        Images images10 = new Images(imageLoad10);
+        Images images11 = new Images(imageLoad11);
+        Images images12 = new Images(imageLoad12);
+        Images images13 = new Images(imageLoad13);
+        Images images14 = new Images(imageLoad14);
+        Images images15 = new Images(imageLoad15);
+        Images images16 = new Images(imageLoad16);
+        Images images17 = new Images(imageLoad17);
+        Images images18 = new Images(imageLoad18);
+        Images images19 = new Images(imageLoad19);
+        Images images20 = new Images(imageLoad20);
+        Images images21 = new Images(imageLoad21);
+        Images images22 = new Images(imageLoad22);
+        Images images23 = new Images(imageLoad23);
+        Images images24 = new Images(imageLoad24);
+        Images images25 = new Images(imageLoad25);
+        Images images26 = new Images(imageLoad26);
 
         background = images.grabImage();
         gif = images2.grabImage();
@@ -142,8 +210,44 @@ public class Game extends Canvas implements Runnable {
         enemy = images6.grabImage();
         ash = images7.grabImage();
         enemyTrainer = images8.grabImage();
+        bug = images9.grabImage();
+        dark = images10.grabImage();
+        dragon = images11.grabImage();
+        electric = images12.grabImage();
+        fairy = images13.grabImage();
+        fighting = images14.grabImage();
+        fire = images15.grabImage();
+        flying = images16.grabImage();
+        ghost = images17.grabImage();
+        grass = images18.grabImage();
+        ground = images19.grabImage();
+        ice = images20.grabImage();
+        normal = images21.grabImage();
+        poison = images22.grabImage();
+        psychic = images23.grabImage();
+        rock = images24.grabImage();
+        steel = images25.grabImage();
+        water = images26.grabImage();
 
         //resize images
+        bug = images.resizeImage(bug, 30,30);
+        dark = images.resizeImage(dark, 30,30);
+        dragon = images.resizeImage(dragon, 30,30);
+        electric = images.resizeImage(electric, 30,30);
+        fairy = images.resizeImage(fairy, 30,30);
+        fighting = images.resizeImage(fighting, 30,30);
+        fire = images.resizeImage(fire, 30,30);
+        flying = images.resizeImage(flying, 30,30);
+        ghost = images.resizeImage(ghost, 30,30);
+        grass = images.resizeImage(grass, 30,30);
+        ground = images.resizeImage(ground, 30,30);
+        ice = images.resizeImage(ice, 30,30);
+        normal = images.resizeImage(normal, 30,30);
+        poison = images.resizeImage(poison, 30,30);
+        psychic = images.resizeImage(psychic, 30,30);
+        rock = images.resizeImage(rock, 30,30);
+        steel = images.resizeImage(steel, 30,30);
+        water = images.resizeImage(water, 30,30);
         ash = images.resizeImage(ash, 300,300);
         enemyTrainer = images.resizeImage(enemyTrainer, 300,300);
         player = images.resizeImage(player, 170, 170);
@@ -164,6 +268,44 @@ public class Game extends Canvas implements Runnable {
         Image img2 = makeTransparent.makeColorTransparent(enemyTrainer, new Color(colour));
         BufferedImage newEnemyTrainer = makeTransparent.imageToBufferedImage(img2);
         //newEnemyTrainer = imageMirror.flip(newEnemyTrainer);
+
+        //remove black background typeImages
+        Image img1 = makeTransparent.makeColorTransparent(bug, new Color(colour));
+        bug = makeTransparent.imageToBufferedImage(img1);
+        Image img3 = makeTransparent.makeColorTransparent(dark, new Color(colour));
+        dark = makeTransparent.imageToBufferedImage(img3);
+        Image img4 = makeTransparent.makeColorTransparent(dragon, new Color(colour));
+        dragon = makeTransparent.imageToBufferedImage(img4);
+        Image img5 = makeTransparent.makeColorTransparent(electric, new Color(colour));
+        electric = makeTransparent.imageToBufferedImage(img5);
+        Image img6 = makeTransparent.makeColorTransparent(fairy, new Color(colour));
+        fairy = makeTransparent.imageToBufferedImage(img6);
+        Image img7 = makeTransparent.makeColorTransparent(fighting, new Color(colour));
+        fighting = makeTransparent.imageToBufferedImage(img7);
+        Image img8 = makeTransparent.makeColorTransparent(fire, new Color(colour));
+        fire = makeTransparent.imageToBufferedImage(img8);
+        Image img9 = makeTransparent.makeColorTransparent(flying, new Color(colour));
+        flying = makeTransparent.imageToBufferedImage(img9);
+        Image img10 = makeTransparent.makeColorTransparent(ghost, new Color(colour));
+        ghost = makeTransparent.imageToBufferedImage(img10);
+        Image img11 = makeTransparent.makeColorTransparent(grass, new Color(colour));
+        grass = makeTransparent.imageToBufferedImage(img11);
+        Image img12 = makeTransparent.makeColorTransparent(ground, new Color(colour));
+        ground = makeTransparent.imageToBufferedImage(img12);
+        Image img13 = makeTransparent.makeColorTransparent(ice, new Color(colour));
+        ice = makeTransparent.imageToBufferedImage(img13);
+        Image img14 = makeTransparent.makeColorTransparent(normal, new Color(colour));
+        normal = makeTransparent.imageToBufferedImage(img14);
+        Image img15 = makeTransparent.makeColorTransparent(poison, new Color(colour));
+        poison = makeTransparent.imageToBufferedImage(img15);
+        Image img16 = makeTransparent.makeColorTransparent(psychic, new Color(colour));
+        psychic = makeTransparent.imageToBufferedImage(img16);
+        Image img17 = makeTransparent.makeColorTransparent(rock, new Color(colour));
+        rock = makeTransparent.imageToBufferedImage(img17);
+        Image img18 = makeTransparent.makeColorTransparent(steel, new Color(colour));
+        steel = makeTransparent.imageToBufferedImage(img18);
+        Image img19 = makeTransparent.makeColorTransparent(water, new Color(colour));
+        water = makeTransparent.imageToBufferedImage(img19);
 
         names = new Names();
         moves = new Moves();
@@ -201,6 +343,45 @@ public class Game extends Canvas implements Runnable {
                 menu.tick();
             }else if(programState == STATE.Game){
                 pokeSill.tick();
+
+                //typeImage assigning
+                if (moveBasePowerIndex1 == 0){
+                    moveType = normal;
+                }if (moveBasePowerIndex1 == 1){
+                    moveType = fighting;
+                }if (moveBasePowerIndex1 == 2){
+                    moveType = flying;
+                }if (moveBasePowerIndex1 == 3){
+                    moveType = poison;
+                }if (moveBasePowerIndex1 == 4){
+                    moveType = ground;
+                }if (moveBasePowerIndex1 == 5){
+                    moveType = rock;
+                }if (moveBasePowerIndex1 == 6){
+                    moveType = bug;
+                }if (moveBasePowerIndex1 == 7){
+                    moveType = ghost;
+                }if (moveBasePowerIndex1 == 8){
+                    moveType = steel;
+                }if (moveBasePowerIndex1 == 9){
+                    moveType = fire;
+                }if (moveBasePowerIndex1 == 10){
+                    moveType = water;
+                }if (moveBasePowerIndex1 == 11){
+                    moveType = grass;
+                }if (moveBasePowerIndex1 == 12){
+                    moveType = electric;
+                }if (moveBasePowerIndex1 == 13){
+                    moveType = psychic;
+                }if (moveBasePowerIndex1 == 14){
+                    moveType = ice;
+                }if (moveBasePowerIndex1 == 15){
+                    moveType = dragon;
+                }if (moveBasePowerIndex1 == 16){
+                    moveType = dark;
+                }if (moveBasePowerIndex1 == 17){
+                    moveType = fairy;
+                }
             }
         }
     }

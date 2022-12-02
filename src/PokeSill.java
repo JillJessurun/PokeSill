@@ -101,9 +101,10 @@ public class PokeSill extends MouseAdapter{
         //metronome button
         if (mouseOver(mx, my, 800, 893, 150,40)) {
             if (game.programState == Game.STATE.Game) {
-                System.out.println("METRONOME!");
-                game.metronomePressed = true;
                 game.move = moves.allMoveArrays[randomNumber1][randomNumber2];
+                game.moveBasePowerIndex1 = randomNumber1;
+                game.moveBasePowerIndex2 = randomNumber2;
+                game.metronomePressed = true;
             }
         }
     }

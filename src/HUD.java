@@ -47,7 +47,9 @@ public class HUD extends MouseAdapter {
         g.setColor(Color.black);
         g.setFont(textFont);
         if (game.metronomePressed) {
-            g.drawString(game.move, 610, 573);
+            g.drawString(game.move + "!", 610, 573);
+            g.drawString("bp  " + game.moves.allBasePowerArrays[game.moveBasePowerIndex1][game.moveBasePowerIndex2],1090, 573);
+            g.drawImage(game.moveType, 1050, 550, null);
         }else{
             g.drawString("Do your metronome!", 610, 573);
         }
