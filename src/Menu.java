@@ -82,10 +82,10 @@ public class Menu extends MouseAdapter {
         //title
         g.setColor(Color.orange);
         g.setFont(titleFont);
-        g.drawString("PokeSill", 190, 200);
+        g.drawString("Pikamon", 190, 200);
         g.setColor(Color.black);
         g.setFont(titleFont2);
-        g.drawString("PokeSill", 189, 200);
+        g.drawString("Pikamon", 189, 200);
 
         //buttons
         g.setFont(buttonFont);

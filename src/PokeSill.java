@@ -4,9 +4,13 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class PokeSill extends MouseAdapter{
     private int counter = 0;
+    private int randomNumber1 = 0;
+    private int randomNumber2 = 0;
+
     private BufferedImage battlefield;
     private BufferedImage player;
     private BufferedImage enemy;
@@ -14,8 +18,10 @@ public class PokeSill extends MouseAdapter{
     private Player playerGame;
     private Enemy enemyGame;
     private HUD hud;
+    private Random random;
+    private Moves moves;
 
-    public PokeSill(BufferedImage battlefield, BufferedImage player, BufferedImage enemy, Game game, Player playerGame, Enemy enemyGame, HUD hud) {
+    public PokeSill(BufferedImage battlefield, BufferedImage player, BufferedImage enemy, Game game, Player playerGame, Enemy enemyGame, HUD hud, Moves moves) {
         this.battlefield = battlefield;
         this.player = player;
         this.enemy = enemy;
@@ -23,9 +29,13 @@ public class PokeSill extends MouseAdapter{
         this.playerGame = playerGame;
         this.enemyGame = enemyGame;
         this.hud = hud;
+        this.moves = moves;
+        random = new Random();
     }
 
     public void tick() {
+        randomNumber1 = random.nextInt(18);
+        randomNumber2 = random.nextInt(moves.allMoveArrays[randomNumber1].length-1);
         playerGame.tick();
         enemyGame.tick();
         hud.tick();
@@ -34,7 +44,7 @@ public class PokeSill extends MouseAdapter{
     public void render(Graphics g) throws IOException, FontFormatException {
         //background
         g.drawImage(battlefield, 0, -100, null);
-        Color color = new Color(79, 18, 0);
+        Color color = new Color(158, 33, 0);
         g.setColor(color);
         g.fillRect(0,930,1800,70);
 
@@ -57,6 +67,13 @@ public class PokeSill extends MouseAdapter{
         if (!game.gameStarted) {
             //heads up display
             hud.render(g);
+
+            //names
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(30f);
+            g.setFont(font);
+            g.setColor(Color.black);
+            g.drawString(game.names.names[game.pokemonPlayerIndex-1], 67,530);
+            g.drawString(game.names.names[game.pokemonEnemyIndex-1], 1290,530);
 
             //metronome button
             Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\SuperMario256.ttf")).deriveFont(18f);
@@ -86,6 +103,7 @@ public class PokeSill extends MouseAdapter{
             if (game.programState == Game.STATE.Game) {
                 System.out.println("METRONOME!");
                 game.metronomePressed = true;
+                game.move = moves.allMoveArrays[randomNumber1][randomNumber2];
             }
         }
     }

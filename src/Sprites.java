@@ -115,7 +115,6 @@ public class Sprites {
         "src\\sprites\\111.png",
         "src\\sprites\\112.png",
         "src\\sprites\\113.png",
-        "src\\sprites\\114.png",
         "src\\sprites\\115.png",
         "src\\sprites\\116.png",
         "src\\sprites\\117.png",
@@ -512,6 +511,8 @@ public class Sprites {
         "src\\sprites\\508.png",
         "src\\sprites\\509.png",
         "src\\sprites\\510.png",
-        "src\\sprites\\511.png"
+        "src\\sprites\\511.png",
+        "src\\sprites\\512.png",
+        "src\\sprites\\513.png"
     };
 }

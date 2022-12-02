@@ -26,32 +26,36 @@ public class HUD extends MouseAdapter {
 
         // your health bar
         g.setColor(Color.black);
-        g.fillRoundRect(47,47,406,36,40,40);
+        g.fillRoundRect(47,547,406,36,40,40);
         g.setColor(Color.green);
-        g.fillRoundRect(50,50,400,30,40,40);
+        g.fillRoundRect(50,550,400,30,40,40);
         g.setColor(Color.black);
-        g.drawString("HP", 470,74);
+        g.drawString("HP", 470,574);
 
         // enemy health bar
-        g.fillRoundRect(1267,47,406,36,40,40);
+        g.fillRoundRect(1267,547,406,36,40,40);
         g.setColor(Color.red);
-        g.fillRoundRect(1270,50,400,30,40,40);
+        g.fillRoundRect(1270,550,400,30,40,40);
         g.setColor(Color.black);
-        g.drawString("HP", 1690,74);
+        g.drawString("HP", 1690,574);
 
         //text bar
         g.setColor(Color.black);
-        g.fillRoundRect(588,33,604,74,10,10);
+        g.fillRoundRect(588,533,604,74,10,10);
         g.setColor(Color.white);
-        g.fillRoundRect(590,35,600,70,10,10);
+        g.fillRoundRect(590,535,600,70,10,10);
         g.setColor(Color.black);
         g.setFont(textFont);
-        g.drawString("Do your metronome!", 610,73);
+        if (game.metronomePressed) {
+            g.drawString(game.move, 610, 573);
+        }else{
+            g.drawString("Do your metronome!", 610, 573);
+        }
 
         //main menu button
         g.setFont(textFont3);
-        g.drawString("Main menu", 850,125);
-        //g.drawRect(850,112,75,15);
+        g.drawString("Main menu", 10,22);
+        //g.drawRect(10,9,75,15);
     }
 
     public void mousePressed(MouseEvent e) {
@@ -59,7 +63,7 @@ public class HUD extends MouseAdapter {
         int my = e.getY();
 
         //main menu button
-        if (mouseOver(mx, my, 850,112,75,15)) {
+        if (mouseOver(mx, my, 10,9,75,15)) {
             if (game.programState == Game.STATE.Game) {
                 game.programState = Game.STATE.Menu;
                 game.metronomePressed = false;

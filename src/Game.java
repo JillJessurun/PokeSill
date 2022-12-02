@@ -12,7 +12,6 @@ ideas:
 - items
  */
 
-import javax.imageio.IIOException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -29,6 +28,9 @@ public class Game extends Canvas implements Runnable {
     private boolean menuCreated = false;
     public boolean gameStarted = false;
     public boolean metronomePressed = false;
+    public String move = "";
+    public int pokemonPlayerIndex;
+    public int pokemonEnemyIndex;
 
     //instances
     private Handler handler;
@@ -40,6 +42,8 @@ public class Game extends Canvas implements Runnable {
     private Player playerGame;
     private Enemy enemyGame;
     private HUD hud;
+    private Moves moves;
+    public Names names;
 
     //images
     private BufferedImage background;
@@ -81,26 +85,26 @@ public class Game extends Canvas implements Runnable {
         imageMirror = new ImageMirror();
 
         handler = new Handler();
-        new Window(WIDTH, HEIGHT, "PokeSill", this);
+        new Window(WIDTH, HEIGHT, "Pikamon", this);
 
         Random rand = new Random();
-        int randomgetal1 = rand.nextInt(511);
-        int randomgetal2 = rand.nextInt(511);
+        pokemonPlayerIndex = rand.nextInt(513);
+        pokemonEnemyIndex = rand.nextInt(513);
 
-        String s = String.valueOf(randomgetal1);
+        String s = String.valueOf(pokemonPlayerIndex);
         String number1 = s;
-        String st = String.valueOf(randomgetal2);
+        String st = String.valueOf(pokemonEnemyIndex);
         String number2 = st;
 
-        if (randomgetal1 < 100 && randomgetal1 >= 10){ //number with 2 digits
+        if (pokemonPlayerIndex < 100 && pokemonPlayerIndex >= 10){ //number with 2 digits
             number1 = "0" + s;
-        }else if(randomgetal1 < 10){ //number with 1 digit
+        }else if(pokemonPlayerIndex < 10){ //number with 1 digit
             number1 = "00" + s;
         }
 
-        if (randomgetal2 < 100 && randomgetal2 >= 10){ //number with 2 digits
+        if (pokemonEnemyIndex < 100 && pokemonEnemyIndex >= 10){ //number with 2 digits
             number2 = "0" + st;
-        }else if(randomgetal2 < 10){ //number with 1 digit
+        }else if(pokemonEnemyIndex < 10){ //number with 1 digit
             number2 = "00" + st;
         }
 
@@ -112,7 +116,7 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyInput(handler));
 
         //declaring path images
-        imageLoad = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\background.jpg");
+        imageLoad = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\background.png");
         imageLoad2 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\pokeball.gif");
         imageLoad3 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\alakazam.gif");
         imageLoad4 = loader.loadImage("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Pics\\background2.png");
@@ -161,12 +165,14 @@ public class Game extends Canvas implements Runnable {
         BufferedImage newEnemyTrainer = makeTransparent.imageToBufferedImage(img2);
         //newEnemyTrainer = imageMirror.flip(newEnemyTrainer);
 
+        names = new Names();
+        moves = new Moves();
         hud = new HUD(this);
         menu = new Menu(background, gif, gif2, imageMirror, this);
         menuCreated = true;
         playerGame = new Player(400, 770, ID.Player, handler, newPlayer, newTrainer, this);
         enemyGame = new Enemy(1200,800,ID.Enemy, handler, newEnemy, newEnemyTrainer, this);
-        pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame, enemyGame, hud);
+        pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame, enemyGame, hud, moves);
 
         this.addMouseListener(menu);
         this.addMouseListener(hud);
