@@ -32,8 +32,10 @@ public class Game extends Canvas implements Runnable {
     public static BufferedImage moveType;
     public int moveBasePowerIndex1 = 0;
     public int moveBasePowerIndex2 = 0;
+    public int basePower = 0;
     public int pokemonPlayerIndex;
     public int pokemonEnemyIndex;
+    public boolean yourTurn = true;
 
     //instances
     private Handler handler;
@@ -312,8 +314,8 @@ public class Game extends Canvas implements Runnable {
         hud = new HUD(this);
         menu = new Menu(background, gif, gif2, imageMirror, this);
         menuCreated = true;
-        playerGame = new Player(400, 770, ID.Player, handler, newPlayer, newTrainer, this);
-        enemyGame = new Enemy(1200,800,ID.Enemy, handler, newEnemy, newEnemyTrainer, this);
+        playerGame = new Player(400, 770, ID.Player, handler, newPlayer, newTrainer, this, hud);
+        enemyGame = new Enemy(1200,800,ID.Enemy, handler, newEnemy, newEnemyTrainer, this, hud);
         pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame, enemyGame, hud, moves);
 
         this.addMouseListener(menu);

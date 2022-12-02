@@ -8,13 +8,34 @@ import java.io.IOException;
 public class HUD extends MouseAdapter {
 
     private Game game;
+    private int playerHealth = 1000;
+    private int enemeyHealth = 1000;
+    private int counter = 0;
+    public boolean metronomePressed = false;
 
     public HUD(Game game){
         this.game = game;
     }
 
     public void tick(){
-
+        if (game.metronomePressed) {
+            counter++;
+            if (game.yourTurn) {
+                if (counter > 140) {
+                    playerHealth = playerHealth - game.basePower;
+                    game.metronomePressed = false;
+                    metronomePressed = false;
+                    counter = 0;
+                }
+            }else{
+                if (counter > 140) {
+                    enemeyHealth = enemeyHealth - game.basePower;
+                    game.metronomePressed = false;
+                    metronomePressed = false;
+                    counter = 0;
+                }
+            }
+        }
     }
 
     public void render(Graphics g) throws IOException, FontFormatException {
@@ -22,22 +43,31 @@ public class HUD extends MouseAdapter {
         Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(20f);
         Font textFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(30f);
         Font textFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(14f);
+        Font HPFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(12f);
         g.setFont(textFont2);
 
         // your health bar
         g.setColor(Color.black);
-        g.fillRoundRect(47,547,406,36,40,40);
+        g.fillRoundRect(62,547,506,36,40,40);
+        g.setColor(Color.darkGray);
+        g.fillRoundRect(65,550,497,28,40,40);
         g.setColor(Color.green);
-        g.fillRoundRect(50,550,400,30,40,40);
+        g.fillRoundRect(65,550,playerHealth/2,30,40,40);
         g.setColor(Color.black);
-        g.drawString("HP", 470,574);
+        g.setFont(HPFont);
+        g.drawString("HP = " + playerHealth, 82,600);
+        g.setFont(textFont2);
 
         // enemy health bar
-        g.fillRoundRect(1267,547,406,36,40,40);
+        g.fillRoundRect(1267,547,506,36,40,40);
+        g.setColor(Color.darkGray);
+        g.fillRoundRect(1270,550,497,28,40,40);
         g.setColor(Color.red);
-        g.fillRoundRect(1270,550,400,30,40,40);
+        g.fillRoundRect(1270,550,enemeyHealth/2,30,40,40);
         g.setColor(Color.black);
-        g.drawString("HP", 1690,574);
+        g.setFont(HPFont);
+        g.drawString("HP = " + enemeyHealth, 1290,600);
+        g.setFont(textFont2);
 
         //text bar
         g.setColor(Color.black);
@@ -47,7 +77,7 @@ public class HUD extends MouseAdapter {
         g.setColor(Color.black);
         g.setFont(textFont);
         if (game.metronomePressed) {
-            g.drawString(game.move + "!", 610, 573);
+            g.drawString(game.move, 610, 573);
             g.drawString("bp  " + game.moves.allBasePowerArrays[game.moveBasePowerIndex1][game.moveBasePowerIndex2],1090, 573);
             g.drawImage(game.moveType, 1050, 550, null);
         }else{

@@ -4,18 +4,21 @@ import java.awt.image.BufferedImage;
 public class Player extends GameObject{
 
     private boolean upwards;
+    private int counter = 0;
 
     private Handler handler;
     private BufferedImage bufferedImage;
     private BufferedImage trainer;
     private Game game;
+    private HUD hud;
 
-    public Player(float x, float y, ID id, Handler handler, BufferedImage bufferedImage, BufferedImage trainer, Game game) {
+    public Player(float x, float y, ID id, Handler handler, BufferedImage bufferedImage, BufferedImage trainer, Game game, HUD hud) {
         super(x, y, id);
         this.handler = handler;
         this.bufferedImage = bufferedImage;
         this.trainer = trainer;
         this.game = game;
+        this.hud = hud;
     }
 
     private void collision(){
@@ -34,16 +37,62 @@ public class Player extends GameObject{
 
     @Override
     public void tick() {
-        if (y >= 800){
-            upwards = false;
-        }else if(y <= 770){
-            upwards = true;
-        }
+        if (!hud.metronomePressed) {
+            if (y >= 800) {
+                upwards = false;
+            } else if (y <= 770) {
+                upwards = true;
+            }
 
-        if (upwards){
-            y = (float) (y + 1.2);
+            if (upwards) {
+                y = (float) (y + 1.2);
+            } else {
+                y = y - 1;
+            }
+
+            x = 400;
+            counter = 0;
+        }else if (!game.yourTurn){
+            counter++;
+
+            //y axis
+            if (counter<110) {
+                if (y >= 800) {
+                    upwards = false;
+                } else if (y <= 770) {
+                    upwards = true;
+                }
+
+                if (upwards) {
+                    y = (float) (y + 4.2);
+                } else {
+                    y = y - 4;
+                }
+            }
+
+            //x axis
+            if (counter>110){
+                //GO!
+                y = 800;
+                x = x + 20;
+            }else {
+                x = x + 1;
+            }
         }else{
-            y = y - 1;
+            if (y >= 800) {
+                upwards = false;
+            } else if (y <= 770) {
+                upwards = true;
+            }
+
+            if (upwards) {
+                y = (float) (y + 1.2);
+            } else {
+                y = y - 1;
+            }
+
+            x = 400;
+            counter = 0;
         }
     }
 

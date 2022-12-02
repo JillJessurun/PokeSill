@@ -72,7 +72,7 @@ public class PokeSill extends MouseAdapter{
             Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\jillj\\IdeaProjects\\PokeSill\\src\\Fonts\\fatText.otf")).deriveFont(30f);
             g.setFont(font);
             g.setColor(Color.black);
-            g.drawString(game.names.names[game.pokemonPlayerIndex-1], 67,530);
+            g.drawString(game.names.names[game.pokemonPlayerIndex-1], 82,530);
             g.drawString(game.names.names[game.pokemonEnemyIndex-1], 1290,530);
 
             //metronome button
@@ -101,10 +101,21 @@ public class PokeSill extends MouseAdapter{
         //metronome button
         if (mouseOver(mx, my, 800, 893, 150,40)) {
             if (game.programState == Game.STATE.Game) {
-                game.move = moves.allMoveArrays[randomNumber1][randomNumber2];
-                game.moveBasePowerIndex1 = randomNumber1;
-                game.moveBasePowerIndex2 = randomNumber2;
-                game.metronomePressed = true;
+                if (!hud.metronomePressed) {
+                    hud.metronomePressed = true;
+                    game.move = moves.allMoveArrays[randomNumber1][randomNumber2];
+                    game.moveBasePowerIndex1 = randomNumber1;
+                    game.moveBasePowerIndex2 = randomNumber2;
+                    game.basePower = moves.allBasePowerArrays[randomNumber1][randomNumber2];
+                    System.out.println("basepower = " + game.basePower);
+                    if (game.yourTurn){
+                        game.yourTurn = false;
+                    }else{
+                        game.yourTurn = true;
+                    }
+
+                    game.metronomePressed = true;
+                }
             }
         }
     }
