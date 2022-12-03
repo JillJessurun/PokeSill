@@ -5,11 +5,13 @@ goal: pokemon metronome game
 
 ideas:
 - audio
-- types
-- moves
+- stab
+- move specs
 - more gens
 - abilities
 - items
+- stop animation when having no effect
+- moves can miss
  */
 
 import java.awt.*;
@@ -30,12 +32,14 @@ public class Game extends Canvas implements Runnable {
     public boolean metronomePressed = false;
     public String move = "";
     public static BufferedImage moveType;
+    public String currentMoveType;
     public int moveBasePowerIndex1 = 0;
     public int moveBasePowerIndex2 = 0;
     public int basePower = 0;
     public int pokemonPlayerIndex;
     public int pokemonEnemyIndex;
     public boolean yourTurn = true;
+    public int counterPlayer = 0;
 
     //instances
     private Handler handler;
@@ -49,6 +53,8 @@ public class Game extends Canvas implements Runnable {
     private HUD hud;
     public Moves moves;
     public Names names;
+    private SpriteTypes spriteTypes;
+    private MoveTypeCheck moveTypeCheck;
 
     //images
     private BufferedImage background;
@@ -309,14 +315,16 @@ public class Game extends Canvas implements Runnable {
         Image img19 = makeTransparent.makeColorTransparent(water, new Color(colour));
         water = makeTransparent.imageToBufferedImage(img19);
 
+        moveTypeCheck = new MoveTypeCheck();
+        spriteTypes = new SpriteTypes();
         names = new Names();
         moves = new Moves();
-        hud = new HUD(this);
+        hud = new HUD(this, moveTypeCheck, spriteTypes);
         menu = new Menu(background, gif, gif2, imageMirror, this);
         menuCreated = true;
-        playerGame = new Player(400, 770, ID.Player, handler, newPlayer, newTrainer, this, hud);
+        playerGame = new Player(400, 770, ID.Player, handler, newPlayer, newTrainer, this, hud, counterPlayer);
         enemyGame = new Enemy(1200,800,ID.Enemy, handler, newEnemy, newEnemyTrainer, this, hud);
-        pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame, enemyGame, hud, moves);
+        pokeSill = new PokeSill(battlefield, newPlayer, newEnemy, this, playerGame, enemyGame, hud, moves, spriteTypes, moveTypeCheck);
 
         this.addMouseListener(menu);
         this.addMouseListener(hud);
@@ -349,40 +357,58 @@ public class Game extends Canvas implements Runnable {
                 //typeImage assigning
                 if (moveBasePowerIndex1 == 0){
                     moveType = normal;
+                    currentMoveType = "normal";
                 }if (moveBasePowerIndex1 == 1){
                     moveType = fighting;
+                    currentMoveType = "fighting";
                 }if (moveBasePowerIndex1 == 2){
                     moveType = flying;
+                    currentMoveType = "flying";
                 }if (moveBasePowerIndex1 == 3){
                     moveType = poison;
+                    currentMoveType = "poison";
                 }if (moveBasePowerIndex1 == 4){
                     moveType = ground;
+                    currentMoveType = "ground";
                 }if (moveBasePowerIndex1 == 5){
                     moveType = rock;
+                    currentMoveType = "rock";
                 }if (moveBasePowerIndex1 == 6){
                     moveType = bug;
+                    currentMoveType = "bug";
                 }if (moveBasePowerIndex1 == 7){
                     moveType = ghost;
+                    currentMoveType = "ghost";
                 }if (moveBasePowerIndex1 == 8){
                     moveType = steel;
+                    currentMoveType = "steel";
                 }if (moveBasePowerIndex1 == 9){
                     moveType = fire;
+                    currentMoveType = "fire";
                 }if (moveBasePowerIndex1 == 10){
                     moveType = water;
+                    currentMoveType = "water";
                 }if (moveBasePowerIndex1 == 11){
                     moveType = grass;
+                    currentMoveType = "grass";
                 }if (moveBasePowerIndex1 == 12){
                     moveType = electric;
+                    currentMoveType = "electric";
                 }if (moveBasePowerIndex1 == 13){
                     moveType = psychic;
+                    currentMoveType = "psychic";
                 }if (moveBasePowerIndex1 == 14){
                     moveType = ice;
+                    currentMoveType = "ice";
                 }if (moveBasePowerIndex1 == 15){
                     moveType = dragon;
+                    currentMoveType = "dragon";
                 }if (moveBasePowerIndex1 == 16){
                     moveType = dark;
+                    currentMoveType = "dark";
                 }if (moveBasePowerIndex1 == 17){
                     moveType = fairy;
+                    currentMoveType = "fairy";
                 }
             }
         }

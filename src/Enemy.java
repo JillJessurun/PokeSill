@@ -27,25 +27,8 @@ public class Enemy extends GameObject{
     }
 
     public void tick() {
-        if (!hud.metronomePressed) {
-            if (y >= 800) {
-                upwards = false;
-            } else if (y <= 770) {
-                upwards = true;
-            }
-
-            if (upwards) {
-                y = (float) (y + 1.2);
-            } else {
-                y = y - 1;
-            }
-            x = 1200;
-            counter = 0;
-        }else if (game.yourTurn) {
-            counter++;
-
-            //y axis
-            if (counter < 110) {
+        if (hud.enemeyHealth > 0) {
+            if (!hud.metronomePressed) {
                 if (y >= 800) {
                     upwards = false;
                 } else if (y <= 770) {
@@ -53,35 +36,54 @@ public class Enemy extends GameObject{
                 }
 
                 if (upwards) {
-                    y = (float) (y + 4.2);
+                    y = (float) (y + 1.2);
                 } else {
-                    y = y - 4;
+                    y = y - 1;
                 }
-            }
+                x = 1200;
+                counter = 0;
+            } else if (game.yourTurn) {
+                counter++;
 
-            //x axis
-            if (counter > 110) {
-                //GO!
-                y = 800;
-                x = x - 20;
+                //y axis
+                if (counter < 110) {
+                    if (y >= 800) {
+                        upwards = false;
+                    } else if (y <= 770) {
+                        upwards = true;
+                    }
+
+                    if (upwards) {
+                        y = (float) (y + 4.2);
+                    } else {
+                        y = y - 4;
+                    }
+                }
+
+                //x axis
+                if (counter > 110) {
+                    //GO!
+                    y = 800;
+                    x = x - 20;
+                } else {
+                    x = x - 1;
+                }
             } else {
-                x = x - 1;
-            }
-        }else{
-            if (y >= 800) {
-                upwards = false;
-            } else if (y <= 770) {
-                upwards = true;
-            }
+                if (y >= 800) {
+                    upwards = false;
+                } else if (y <= 770) {
+                    upwards = true;
+                }
 
-            if (upwards) {
-                y = (float) (y + 1.2);
-            } else {
-                y = y - 1;
-            }
+                if (upwards) {
+                    y = (float) (y + 1.2);
+                } else {
+                    y = y - 1;
+                }
 
-            x = 1200;
-            counter = 0;
+                x = 1200;
+                counter = 0;
+            }
         }
     }
 
